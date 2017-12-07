@@ -120,7 +120,7 @@ nodepop/
 └─ app.js
 ```
 
-### /setenv
+#### /setenv
 
 Convenience shell script to setup the environment variables used by the NPM scripts.
 
