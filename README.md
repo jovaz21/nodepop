@@ -18,6 +18,7 @@ npm run lint # lint using ESLint
 ```
 Make sure, before running `npm run XXX`, to have the following environment variables, correctly set:
 ```bash
+$ NODE_PATH # the pathname to the project's folder
 $ MONGODB_IP # the binding IP address for the MongoDB server
 $ MONGODB_PORT # the binding PORT for the MongoDB server
 $ MONGODB_NAME # the name of the MongoDB database
@@ -119,32 +120,30 @@ nodepop/
 └─ app.js
 ```
 
-### src/api/
+### /setenv
 
-Here is where the API endpoints are defined. Each API has its own folder.
+Convenience shell script to setup the environment variables used by the NPM scripts.
 
-#### src/api/some-endpoint/model.js
+#### /mongodb/
 
-It defines the Mongoose schema and model for the API endpoint. Any changes to the data model should be done here.
+This is where the MONGO Database Server stuff si registered (at first there are only dataset files).
 
-#### src/api/some-endpoint/controller.js
+#### /public/images/articles/*.jpg
 
-This is the API controller file. It defines the main router middlewares which use the API model.
+The photos of the articles.
 
-#### src/api/some-endpoint/index.js
+#### /services/nodepop/
 
-This is the entry file of the API. It defines the routes using, along other middlewares (like session, validation etc.), the middlewares defined in the `some-endpoint.controller.js` file.
-
-### services/
-
-Here you can put `helpers`, `libraries` and other types of modules which you want to use in your APIs.
+This is where the implementation of the RESTful API (`apiv1/` subfolder) is located, along with the "Business Model" layer (`model/` subfolder). The model package follows the "Façade Design Pattern" (a simple interface is provided) so that the details and complexities of the "Business Model" layer are perfectly hidden to the clients.
 
 ## TODO
 
-- Support optional phone authentication
-- Support optional email confirmation process
-- Support Twitter and other social login methods
-- Socket.io support
+-	Implementation of '/nodepop/apiv1/users/authenticate' Service with JSON Web Token based Security Mechanism
+-	Implementation of '/nodepop/apiv1/users' Services (POST)
+-	Complete Errors Handling & Management (+ Custom I18N Error Library /i18n/Resources.js and /i18n/Resources_es.js)
+-	Implementation of '/nodepop/apiv1/ads' Services (GET|GET:id|PUT|DELETE)
+-	Substitute 'setup_datasets' (Shell Script) by 'setup_datasets.js' (Javascript)
+-	Clustering
 
 ## Credits
 
