@@ -1,3 +1,12 @@
+# Private Stuff
+*.swp
+1.run-mongod.cmd
+2.setup-nodepop-db.cmd
+3.mongo-shell.cmd
+run-apiserver-dev.cmd
+run-apiserver.cmd
+setenv-and-run-cmd.cmd
+
 # Logs
 logs
 *.log
