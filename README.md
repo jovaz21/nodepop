@@ -2,9 +2,9 @@
 
 ## Features
 
- - **Users Management** - Only for Registered Users (the API provides a registration service to App users)
+ - **Users Management** - Only for Registered Users (the API provides a registration service for App users)
  - **Ads Querying** - Complete listing, searching and filtering interface including pagination capability
- - **I18N Errors Management** - Error Messages are provided in the requested language (if supported/provided, 'en' otherwise)
+ - **I18N Errors** - Error Messages are provided in the requested language (if supported/provided, 'en' otherwise)
 
 ## Commands
 
