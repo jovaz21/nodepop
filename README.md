@@ -1,9 +1,10 @@
-> RESTful API using NodeJS, Express and Mongoose for 'nonepop' Mobile App
+> RESTful API using NodeJS, Express and Mongoose for 'nodepop' Mobile App
 
 ## Features
 
- - **My Feature** - Short explanation
- - **Another one** - And its short explanation
+ - **Users Management** - Only for Registered Users (the API provides a registration service to App users)
+ - **Ads Querying** - Complete listing, searching and filtering interface including pagination capability
+ - **I18N Errors Management** - Error Messages are provided in the requested language (if supported/provided, 'en' otherwise)
 
 ## Commands
 
@@ -16,7 +17,7 @@ npm run start # run the API Server (default mode)
 npm run dev # run the API Server in development mode (through nodemon and --inspect option set)
 npm run lint # lint using ESLint
 ```
-Make sure, before running `npm run XXX`, to have the following environment variables, correctly set:
+Make sure, before running any of the `npm run XXX` commands, to have at first the following environment variables, correctly set:
 ```bash
 $ NODE_PATH # the pathname to the project's folder
 $ MONGODB_IP # the binding IP address for the MongoDB server
