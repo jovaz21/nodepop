@@ -87,25 +87,36 @@ HTTP/1.1 201 Created
 You can customize the `src` and `api` directories.
 
 ```
-src/
-├─ api/
-│  ├─ user/
-│  │  ├─ controller.js
-│  │  ├─ index.js
-│  │  ├─ index.test.js
-│  │  ├─ model.js
-│  │  └─ model.test.js
-│  └─ index.js
+nodepop/
+├─ setenv
+├─ setenv.cmd
+|
+├─ mongodb/
+│  ├─ ads-dataset.json
+│  └─ tags-dataset.json
+|
+├─ public/
+│  └─ images/
+│     └─ articles/*.jpg
+|
 ├─ services/
-│  ├─ express/
-│  ├─ facebook/
-│  ├─ mongoose/
-│  ├─ passport/
-│  ├─ sendgrid/
-│  └─ your-service/
-├─ app.js
-├─ config.js
-└─ index.js
+│  └─ nodepop/
+│     └─ apiv1/
+|     |  ├─ ads.js
+|     |  └─ tags.js
+│     └─ model/
+|        └─ index.js
+│           └─ data/
+│              ├─ _DataSource.json
+│              ├─ Add.js
+│              └─ Tag.js
+├─ lib/
+│  └─ txw/
+│     ├─ index.json
+│     └─ utils/
+|        └─ StringUtils.js
+|
+└─ app.js
 ```
 
 ### src/api/

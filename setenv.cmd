@@ -1,6 +1,7 @@
 @echo off
 
 set PATH="C:\Program Files\MongoDB\Server\3.4\bin";%PATH%
+set NODE_PATH=./
 set MONGODB_IP=localhost
 set MONGODB_PORT=27017
 set MONGODB_NAME=nodepop

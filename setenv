@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export NODE_PATH=./
 export MONGODB_IP=localhost
 export MONGODB_PORT=27017
 export MONGODB_NAME=nodepop
