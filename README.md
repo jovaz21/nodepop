@@ -144,9 +144,6 @@ This is where the implementation of the RESTful API (`apiv1/` subfolder) is loca
 
 ## TODO
 
--	Implementation of '/nodepop/apiv1/users/authenticate' Service with JSON Web Token based Security Mechanism
--	Implementation of '/nodepop/apiv1/users' Services (POST)
--	Complete Errors Handling & Management (+ Custom I18N Error Library /i18n/Resources.js and /i18n/Resources_es.js)
 -	Implementation of '/nodepop/apiv1/ads' Services (GET|GET:id|PUT|DELETE)
 -	Substitute 'setup_datasets' (Shell Script) by 'setup_datasets.js' (Javascript)
 -	Clustering
