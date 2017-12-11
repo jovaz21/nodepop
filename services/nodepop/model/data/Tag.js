@@ -1,6 +1,6 @@
 'use strict';
 
-var mongoose = require('./_DataSource');
+const mongoose = require('./_DataSource');
 
 // Tag Schema
 const tagSchema = mongoose.Schema({

@@ -3,7 +3,15 @@
 const express = require('express');
 const router = express.Router();
 
-const manager = require('../model');
+const manager = require('services/nodepop/model');
+const NPError = require('services/nodepop/model/error');
+
+const authorization = require('services/nodepop/helpers/security').authorization;
+
+/********** AUTHORIZATION ************/
+router.use(authorization.handler());
+/*************************************/
+
 
 /**
  * GET /tags

@@ -86,8 +86,6 @@ HTTP/1.1 201 Created
 
 ### Overview
 
-You can customize the `src` and `api` directories.
-
 ```
 nodepop/
 ├─ setenv
@@ -105,13 +103,20 @@ nodepop/
 │  └─ nodepop/
 │     └─ apiv1/
 |     |  ├─ ads.js
-|     |  └─ tags.js
+|     |  ├─ tags.js
+|     |  └─ users.js
+│     └─ helpers/
+|     |  └─ security/
+│     |     ├─ index.js
+│     |     └─ authorization.js
 │     └─ model/
-|        └─ index.js
-│           └─ data/
-│              ├─ _DataSource.json
-│              ├─ Add.js
-│              └─ Tag.js
+|        ├─ index.js
+|        └─ error.js
+│        └─ data/
+│           ├─ _DataSource.json
+│           ├─ Add.js
+│           ├─ Tag.js
+│           └─ User.js
 ├─ lib/
 │  └─ txw/
 │     ├─ index.json

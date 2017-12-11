@@ -1,13 +1,13 @@
 'use strict';
 
-var mongoose = require('./_DataSource');
+const mongoose = require('./_DataSource');
 
-var TXW = require('lib/txw');
+const TXW = require('lib/txw');
 
 // Ad Schema
 const adSchema = mongoose.Schema({
 	type:		{ type: String, enum: ['sale', 'purchase'] },
-	status:		{ type: String, enum: ['draft', 'published'] },
+	status:		{ type: String, enum: ['draft', 'published'], default: 'draft' },
 	statusDate:	{ type: Date, default: Date.now },
 	article: {
 	    name:	{ type: String },
