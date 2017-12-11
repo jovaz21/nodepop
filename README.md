@@ -146,7 +146,7 @@ This is where the implementation of the RESTful API (`apiv1/` subfolder) is loca
 
 ## TODO
 
--	Implementation of '/nodepop/apiv1/ads' Services (GET|GET:id|PUT|DELETE)
+-	I18N Error Messages
 -	Clustering
 
 ## Credits
