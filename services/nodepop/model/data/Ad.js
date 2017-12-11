@@ -5,7 +5,7 @@ const mongoose = require('./_DataSource');
 const TXW = require('lib/txw');
 
 // Ad Schema
-const adSchema = mongoose.Schema({
+const schema = mongoose.Schema({
 	type:		{ type: String, enum: ['sale', 'purchase'] },
 	status:		{ type: String, enum: ['draft', 'published'], default: 'draft' },
 	statusDate:	{ type: Date, default: Date.now },
@@ -36,7 +36,7 @@ const adSchema = mongoose.Schema({
 	},
 	tags:		[String]
 });
-adSchema.statics.list = (filters = {}, limit, skip, sort, select) => {
+schema.statics.list = (filters = {}, limit, skip, sort, select) => {
 	const query = Ad.find(filters);
 	if (TXW.isDefined(limit))
 		query.limit(limit);
@@ -50,5 +50,5 @@ adSchema.statics.list = (filters = {}, limit, skip, sort, select) => {
 };
 
 // Ad Model
-const Ad = mongoose.model('Ad', adSchema);
+const Ad = mongoose.model('Ad', schema);
 module.exports = Ad;

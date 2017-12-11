@@ -5,7 +5,7 @@
   "scripts": {
     "mongod": "cross-env-shell \"mongod --bind_ip $MONGODB_IP --port $MONGODB_PORT --dbpath .\\mongodb --directoryperdb\"",
     "mongo": "cross-env-shell MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"mongo $MONGODB_URI\"",
-    "nodepop_db_setup": "cross-env-shell \"cd .\\mongodb && .\\setup_datasets\"",
+    "nodepop_db_setup": "cross-env-shell MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"node ./mongodb/setup_datasets.js\"",
     "start": "cross-env-shell PORT=$APISERVER_PORT MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"node ./bin/www\"",
     "dev": "cross-env-shell DEBUG=nodepop:* PORT=$APISERVER_PORT MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"nodemon --inspect ./bin/www\"",
     "lint": "lint app.js",

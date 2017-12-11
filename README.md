@@ -92,8 +92,10 @@ nodepop/
 ├─ setenv.cmd
 |
 ├─ mongodb/
+│  ├─ setup_datasets.js
 │  ├─ ads-dataset.json
-│  └─ tags-dataset.json
+│  ├─ tags-dataset.json
+│  └─ users-dataset.json
 |
 ├─ public/
 │  └─ images/
@@ -145,7 +147,6 @@ This is where the implementation of the RESTful API (`apiv1/` subfolder) is loca
 ## TODO
 
 -	Implementation of '/nodepop/apiv1/ads' Services (GET|GET:id|PUT|DELETE)
--	Substitute 'setup_datasets' (Shell Script) by 'setup_datasets.js' (Javascript)
 -	Clustering
 
 ## Credits

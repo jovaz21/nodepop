@@ -3,14 +3,14 @@
 const mongoose = require('./_DataSource');
 
 // Tag Schema
-const tagSchema = mongoose.Schema({
+const schema = mongoose.Schema({
 	name: { type: String, index: true, unique: true }
 });
-tagSchema.statics.list = () => {
+schema.statics.list = () => {
 	const query = Tag.find({});
 	return(query.exec());
 };
 
 // Tag Model
-const Tag = mongoose.model('Tag', tagSchema);
+const Tag = mongoose.model('Tag', schema);
 module.exports = Tag;
