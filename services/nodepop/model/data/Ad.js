@@ -40,7 +40,7 @@ schema.statics.listTags = () => {
 	const ads = mongoose.connection.collection('ads');
 	return(ads.distinct("tags"));
 };
-schema.statics.list = (filters = {}, limit, skip, sort, select) => {
+schema.statics.list = (filters, limit, skip, sort, select) => {
 	const query = Ad.find(filters);
 	if (TXW.isDefined(limit))
 		query.limit(limit);
