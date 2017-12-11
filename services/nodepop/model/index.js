@@ -67,6 +67,9 @@ const manager = {
     },
 
     // Tags Management
+    listUsedTags: async () => {
+        return(await Ad.listTags());
+    },
     listTags: async () => {
         return(await Tag.list());
     }

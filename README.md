@@ -12,7 +12,7 @@ After you generate your project, these commands are available in `package.json`.
 
 ```bash
 npm run mongod # run the MongoDB server
-npm run nodepop_db_setup # setup the 'nodepop' database (drop and reload 'tags' and 'ads' datasets)
+npm run nodepop_db_setup # setup the 'nodepop' database (drop and reload 'users', 'tags' and 'ads' datasets)
 npm run start # run the API Server (default mode)
 npm run dev # run the API Server in development mode (through nodemon and --inspect option set)
 npm run lint # lint using ESLint

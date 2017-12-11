@@ -18,6 +18,7 @@ app.get('/favicon.ico', function(req, res) {
 });
 
 // Services
+app.use('/nodepop/apiv1/ads', require('./services/nodepop/apiv1/ads'));
 app.use('/nodepop/apiv1/tags', require('./services/nodepop/apiv1/tags'));
 app.use('/nodepop/apiv1/users', require('./services/nodepop/apiv1/users'));
 
