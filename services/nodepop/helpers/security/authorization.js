@@ -1,5 +1,6 @@
 'use strict';
 
+const manager = require('services/nodepop/model');
 const NPError = require('services/nodepop/model/error');
 
 const security = require('./index');
@@ -20,12 +21,26 @@ module.exports = {
 		}
 
 		/* check */
-		security.verifyToken(token, (err, decoded) => {
+		security.verifyToken(token, async (err, decoded) => {
+
+			/* check */
 			if (err) {
 				next(new NPError.AuthorizationError(err));
 				return;
 			}
-			req.userId = decoded._id;
+
+			/* check */
+			let user = null;
+			if ((user = await manager.getUser(decoded._id)) == null) {
+				next(new NPError.AuthorizationError());
+				return;
+			}
+
+			/* set */
+			req.userId	= decoded._id;
+			req.user	= user;
+
+			/* */
 			next();
 		});
 	});

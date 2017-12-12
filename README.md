@@ -20,6 +20,7 @@ npm run dev # run the API Server in development mode (uses `nodemon` with `--ins
 npm run lint # lint using ESLint
 ```
 Make sure, before running any of the `npm run XXX` commands, to have at first the following environment variables, correctly set:
+
 ```bash
 $ NODE_PATH # the pathname to the project's folder
 $ MONGODB_IP # the binding IP address for the MongoDB server

@@ -16,6 +16,13 @@ const manager = {
 		throw(NPError.create(excp));
         }
     },
+    getUser: async (id) => {
+        try {
+		return(await User.findById(id).exec());
+        } catch(excp) {
+		throw(NPError.create(excp));
+        }
+    },
     authenticateUser: async (email, password) => {
 
 	/* check */

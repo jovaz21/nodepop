@@ -50,8 +50,17 @@ router.getRange = function(rangeStr) { const range = rangeStr.split("-");
 	if (range.length === 1)
 		res = TXW.utils.StringUtils.parseInt(rangeStr, { '$gte': 0 });
 	else {
-		const	rangeMin = TXW.utils.StringUtils.parseInt(range[0], 0);
-		const	rangeMax = TXW.utils.StringUtils.parseInt(range[1]);
+		let	rangeMin = TXW.utils.StringUtils.parseInt(range[0], 0);
+		let	rangeMax = TXW.utils.StringUtils.parseInt(range[1]);
+
+		/* check */
+		if (TXW.isDefined(rangeMin) && TXW.isDefined(rangeMax)) {
+			if (rangeMin > rangeMax) {
+				const swap = rangeMax;
+				rangeMax = rangeMin;
+				rangeMin = swap;
+			}
+		}
 
 		/* set */
 		res = TXW.applyIf(res, (TXW.isDefined(rangeMin) ? { '$gte': rangeMin } : {}));

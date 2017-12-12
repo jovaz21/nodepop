@@ -28,7 +28,7 @@ router.post('/', async function(req, res, next) {
 	const user = await manager.createUser({ name, email, password });
 
 	/* done */
-        res.json({ success: true, result: user });
+        res.json({ success: true, result: { _id: user._id, name: user.name, email: user.email, created: user.created } });
 
     } catch(excp) {
 	console.log("<users> Exception caught, excp=%o", excp);
