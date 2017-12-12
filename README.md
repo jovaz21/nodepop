@@ -9,13 +9,13 @@
 
 ## Commands
 
-After you generate your project, these commands are available in `package.json`.
+After you generate your project, the following commands are available in `package.json`.
 
 ```bash
 npm run mongod # run the MongoDB server
 npm run nodepop_db_setup # setup the 'nodepop' database (drop and reload 'users', 'tags' and 'ads' datasets)
 npm run start # run the API Server (default mode)
-npm run dev # run the API Server in development mode (through nodemon and --inspect option set)
+npm run dev # run the API Server in development mode (uses `nodemon` with `--inspect` option set)
 npm run lint # lint using ESLint
 ```
 Make sure, before running any of the `npm run XXX` commands, to have at first the following environment variables, correctly set:
@@ -33,7 +33,7 @@ The service is backed by a [MongoDB](https://www.mongodb.com/) database instance
 ```bash
 $ npm run mongod
 ```
-Once the database is running, then populate it with some 'users', 'tags' and 'ads' using the following command:
+Once the database is running, then populate it with some 'users', 'tags' and 'ads' sample datasets using the following command:
 
 ```bash
 $ npm run nodepop_db_setup
@@ -56,7 +56,7 @@ $ npm run dev
 ```
 Once this is done, you're ready to play with the API!
 
-## Playing with our RESTful API
+## Playing with the RESTful API
 
 Authenticate (sign in) with the default provided `guest` account:
 ```bash
@@ -74,14 +74,14 @@ HTTP/1.1 200 OK
   }
 }
 ```
-Then, to be allowed to use the Ads API you must provide in each request your JSON Web Token. Let's see some of the implemented API requests:
+Then, to be allowed to use the Ads API you must provide in each request this returned JSON Web Token. Let's see some of the implemented API requests:
 
 Listing all the available `Tags`:
 ```bash
 $ curl -X GET http://localhost:8080/nodepop/apiv1/tags -i -d "token=JSON_TOKEN_HERE"
 ```
 
-Listing all the `Tags` actually used by `Ads`:
+Listing all the `Tags` actually used in the `Ads` collection:
 ```bash
 $ curl -X GET http://localhost:8080/nodepop/apiv1/ads/tags -i -d "token=JSON_TOKEN_HERE"
 ```
@@ -117,37 +117,106 @@ Then, the user can authenticate with:
 $ curl -X POST http://localhost:8080/nodepop/apiv1/users/authenticate -i -d "email=guest@foo.bar&password=guest"
 ```
 
-To be returned a granted JSON Web Token that must be included in every API request.
+This returns a private JSON Web Token that must be included in every API request the user does.
 
 
-## Ads List API
+## Ads Querying API
 
 ### Fields Extraction
 
-The API implements an Account Registration service so that new users can be registered in the `users` database collection:
+Each `Ad` in the `ads` database collection has the following data:
+
 ```bash
-$ curl -X POST http://localhost:8080/nodepop/apiv1/users -i -d "name=jovaz&email=jovaz21@gmail.com&password=1234"
+{
+  "type":           # Type of Ad (`sale`|`purchase`)
+  "status":         # Status (`draft`|`published`)
+  "statusDate":     # Last Status update Date
+  "article": {
+    "name":         # Name of the Article
+    "description":  # Description
+    "photo":        # Photo (JPEG archive in `public/images/articles/` folder)
+  },
+  "contact": {
+    "type":         # Type of Contact (`professional`|`individual`)
+    "name":         # Name of the contact
+    "nickname":     # Nickname
+    "phone":        # Phone number
+    "country":      # Country Code (ex. '34' for Spain)
+    "street":       # Street address
+    "city":         # City
+    "zipCode":      # Zip Code
+    "web":          # Web URL
+  },
+  "amount":         # Price
+  "stats": {
+    "views":        # Number of accesses to this Ad
+    "contacts":     # Number of contacts requested
+  },
+  "tags":           # Array of Tags
+}
+```
+By default listing queries extract the following fields:
+
+```bash
+{
+  "type":           # Type of Ad (`sale`|`purchase`)
+  "article": {
+    "name":         # Name of the Article
+    "description":  # Description
+    "photo":        # Photo (JPEG archive in `public/images/articles/` folder)
+  },
+  "contact": {
+    "type":         # Type of Contact (`professional`|`individual`)
+    "nickname":     # Nickname
+  },
+  "amount":         # Price
+}
+```
+But if needed, the API allows a way to select the desired fields. For example, to add the `tags` field:
+
+```bash
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?select=tags" -i -d "token=JSON_TOKEN_HERE"
 ```
 
 ### Paginating
 
-The API implements an Account Registration service so that new users can be registered in the `users` database collection:
+The pagination feature is based on the use of `skip` and `limit` parameters:
+
 ```bash
-$ curl -X POST http://localhost:8080/nodepop/apiv1/users -i -d "name=jovaz&email=jovaz21@gmail.com&password=1234"
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?skip=2&limit=2&select=tags" -i -d "token=JSON_TOKEN_HERE"
 ```
 
 ### Filtering by Article `Name` and/or `Tag` and/or by Ad `Type` (`sale`|`purchase`)
 
-The API implements an Account Registration service so that new users can be registered in the `users` database collection:
+The API offers the `name`, `tag` and `type` parameters:
+
 ```bash
-$ curl -X POST http://localhost:8080/nodepop/apiv1/users -i -d "name=jovaz&email=jovaz21@gmail.com&password=1234"
+# All the Ads with names starting with `iphone`:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?name=iphone" -i -d "token=JSON_TOKEN_HERE"
+
+# All the Ads with Articles for sale:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?type=sale" -i -d "token=JSON_TOKEN_HERE"
+
+# All the Ads with `lifestyle` within their `Tags List`:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?tag=lifestyle" -i -d "token=JSON_TOKEN_HERE"
 ```
 
 ### Filtering by `Amount` (ranges of prices)
 
 The API implements an Account Registration service so that new users can be registered in the `users` database collection:
+
 ```bash
-$ curl -X POST http://localhost:8080/nodepop/apiv1/users -i -d "name=jovaz&email=jovaz21@gmail.com&password=1234"
+# All the Ads for 50 euros:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?range=50" -i -d "token=JSON_TOKEN_HERE"
+
+# All the Ads with prices between 50 and 200 euros:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?range=50-200" -i -d "token=JSON_TOKEN_HERE"
+
+# All the Ads with prices less than 500 euros:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?range=-500" -i -d "token=JSON_TOKEN_HERE"
+
+# All the Ads with prices over 1000 euros:
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?range=1000-" -i -d "token=JSON_TOKEN_HERE"
 ```
 
 ## Directory structure
