@@ -172,10 +172,10 @@ By default listing queries extract the following fields:
   "amount":         # Price
 }
 ```
-But if needed, the API allows a way to select the desired fields. For example, to add the `tags` field:
+But if needed, the API allows to select the desired fields. For example, to extract only the `_id` and `tags` field:
 
 ```bash
-$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?select=tags" -i -d "token=JSON_TOKEN_HERE"
+$ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?select=_id+tags" -i -d "token=JSON_TOKEN_HERE"
 ```
 
 ### Paginating
@@ -202,8 +202,6 @@ $ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?tag=lifestyle" -i -d "tok
 ```
 
 ### Filtering by `Amount` (ranges of prices)
-
-The API implements an Account Registration service so that new users can be registered in the `users` database collection:
 
 ```bash
 # All the Ads for 50 euros:
