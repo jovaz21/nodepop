@@ -1,5 +1,7 @@
 'use strict';
 
+const debug = require('debug')('nodepop:apiv1');
+
 const express = require('express');
 const router = express.Router();
 
@@ -19,12 +21,13 @@ router.use(authorization.handler());
  * List ads
  */
 router.get('/', async function(req, res, next) {
-
-	/* set */
 	const name	= req.query.name;
 	const type	= req.query.type;
 	const tag	= req.query.tag;
 	const range	= req.query.range;
+
+	/* */
+	debug("<GET '/ads'> handler: Entering, name='" + name + "', type='" + type + "', tag='" + tag + "', range='" + range + "'...");
 
 	/* set */
 	const limit 	= TXW.utils.StringUtils.parseInt(req.query.limit, 0);
@@ -41,6 +44,7 @@ router.get('/', async function(req, res, next) {
 	const ads = await manager.listAds(filters, limit, skip, sort, select);
 
 	/* done */
+	debug("<GET '/ads'> handler: Done (#" + ads.length + " Ads Found)");
 	res.json({ success: true, result: ads });
 });
 router.getRange = function(rangeStr) { const range = rangeStr.split("-");
@@ -76,8 +80,10 @@ router.getRange = function(rangeStr) { const range = rangeStr.split("-");
  * List tags (only used ones in ads)
  */
 router.get('/tags', async function(req, res, next) {
-    const tags = await manager.listUsedTags();
-    res.json({ success: true, result: tags });
+	debug("<GET '/ads/tags'> handler: Entering...");
+	const tags = await manager.listUsedTags();
+	debug("<GET '/ads/tags'> handler: Done (#" + tags.length + " Tags Found)");
+	res.json({ success: true, result: tags });
 });
 
 module.exports = router;

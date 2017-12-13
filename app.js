@@ -1,3 +1,5 @@
+const APP_LOG = require('debug')('nodepop:app');
+
 const TXW = require('lib/txw');
 
 var express = require('express');
@@ -35,6 +37,9 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
 	const lang	= req.body.lang || req.query.lang || req.get('Accept-Language');
 	const message	= TXW.isDefined(err.getI18NMessage) ? err.getI18NMessage(lang) : err.message;
+
+	/* */
+	APP_LOG("<Error #" + err.code + "> '" + message + "'");
 
 	/* response */
 	res.status(err.status || 500);

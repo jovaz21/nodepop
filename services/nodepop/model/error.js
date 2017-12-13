@@ -30,24 +30,26 @@ function NPError(message) { const me = this;
 
 		/* check */
 		if (!TXW.isDefined(lang))
-			return(me.message);
+			lang = 'en'; // Fallback! => If no 'lang' set it to default language ('en')
 
 		/* check */
 		if (!TXW.isDefined(me.messages))
-			me.messages = { en: require('res/strings').errors };
+			me.messages = { en: require('res/strings').errors }; // Init & Load 'fallback' strings ('en')
+
+		/* check */
 		if (!TXW.isDefined(me.messages[lang])) {
 			try {
-				me.messages[lang] = require('res/strings_' + lang).errors;
+				me.messages[lang] = require('res/strings_' + lang).errors; // Load strings for 'lang'
 			} catch(e) {
-				me.messages[lang] = me.messages['en'];
+				me.messages[lang] = me.messages['en'];	// Fallback! => Assign 'lang' strings to 'en' ones
 			}
 		}
 
 		/* check */
 		if (!TXW.isDefined(me.messages[lang][me.message]) && (lang != 'en'))
-			lang = 'en';
+			lang = 'en';		// Fallback! => if no localized message for given 'lang'... try with 'en'
 		if (!TXW.isDefined(me.messages[lang][me.message]))
-			return(me.message);
+			return(me.message);	// Nothing else to try out!! (returns message as-is)
 
 		/* done */
 		return(me.messages[lang][me.message]);

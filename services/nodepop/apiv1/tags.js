@@ -1,5 +1,7 @@
 'use strict';
 
+const debug = require('debug')('nodepop:apiv1');
+
 const express = require('express');
 const router = express.Router();
 
@@ -18,8 +20,10 @@ router.use(authorization.handler());
  * List tags (all of them)
  */
 router.get('/', async function(req, res, next) {
-    const tags = await manager.listTags();
-    res.json({ success: true, result: tags});
+	debug("<GET '/tags'> handler: Entering...");
+	const tags = await manager.listTags();
+	debug("<GET '/tags'> handler: Done (#" + tags.length + " Tags Found)");
+	res.json({ success: true, result: tags});
 });
 
 module.exports = router;

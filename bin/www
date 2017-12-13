@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const TXW = require('lib/txw');
+
 /**
  * Module dependencies.
  */
@@ -15,19 +17,57 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+/**************** START MODE CONTROL *****************/
 
-var server = http.createServer(app);
+// Create HTTP Server
+const createHttpServer = function() {
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+	/**
+	* Create HTTP server.
+	*/
+	const server = http.createServer(app);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+	/**
+	* Listen on provided port, on all network interfaces.
+	*/
+	server.listen(port);  
+	server.on('error', onError);
+	server.on('listening', onListening);
+
+	/* done */
+	return(server);
+}
+
+// Check Start Mode
+if (!TXW.isDefined(process.env.NODE_ENV) || (process.env.NODE_ENV == 'development')) {
+	var server = createHttpServer();
+}
+else {
+	const CLUSTER_LOG = require('debug')('nodepop:cluster');
+	const cluster = require('cluster');
+
+	/* check */
+	if (!cluster.isMaster) {
+		var server = createHttpServer();
+	}
+	else {
+		/* */
+		cluster.on('listening', (worker, address) => {
+			CLUSTER_LOG(`Worker ${worker.id} con PID ${worker.process.pid} conectado a puerto ${address.port}`);
+		});
+		cluster.on('exit', (worker, code, signal) => {
+			CLUSTER_LOG(`Worker ${worker.process.pid} muerto con código ${code} y señal ${signal}`);
+			cluster.fork();
+		});
+
+		/* fork workers */
+		const coresCount = require('os').cpus().length;
+		for (let i = 0; i < coresCount; i++)
+			cluster.fork();
+	}
+}
+
+/*****************************************************/
 
 /**
  * Normalize a port into a number, string, or false.
