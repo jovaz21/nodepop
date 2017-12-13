@@ -285,6 +285,14 @@ The photos of the articles.
 
 This is where the implementation of the RESTful API (`apiv1/` subfolder) is located, along with the "Business Model" layer (`model/` subfolder). The model package follows the "Façade Design Pattern" (a simple interface is provided) so that the details and complexities of the "Business Model" layer are perfectly hidden to the clients.
 
+#### /lib/
+
+Some convenience utilities...
+
+#### /res/strings
+
+Where are declared the i18n literals (english + spanish)
+
 ## Credits
 
 Thanks to all [contributors](https://github.com/jovaz21/nodepop/graphs/contributors)
