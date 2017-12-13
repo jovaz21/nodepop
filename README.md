@@ -15,7 +15,7 @@ After you generate your project, the following commands are available in `packag
 ```bash
 npm run mongod # run the MongoDB server
 npm run nodepop_db_setup # setup the 'nodepop' database (drop and reload 'users', 'tags' and 'ads' datasets)
-npm run start # run the API Server (default mode)
+npm run start # run the API Server in production mode (start up `node` with Clustered Workers)
 npm run dev # run the API Server in development mode (uses `nodemon` with `--inspect` option set)
 npm run lint # lint using ESLint
 ```
