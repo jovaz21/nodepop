@@ -46,7 +46,7 @@ You're ready to start up the server!...
 
 The Node.JS server our RESTful API uses is an [Express Server](https://www.expressjs.com/) which mus be run in another terminal instance. We provide 2 ways to start it up...
 
-1./ Default Mode
+1./ Production Mode (start up `node` with Clustered Workers)
 
 ```bash
 $ npm run start
@@ -116,7 +116,7 @@ HTTP/1.1 200 OK
 ```
 Then, the user can authenticate with:
 ```bash
-$ curl -X POST http://localhost:8080/nodepop/apiv1/users/authenticate -i -d "email=guest@foo.bar&password=guest"
+$ curl -X POST http://localhost:8080/nodepop/apiv1/users/authenticate -i -d "email=jovaz21@gmail.com&password=1234"
 ```
 
 This returns a private JSON Web Token that must be included in every API request the user does.
