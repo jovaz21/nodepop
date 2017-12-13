@@ -1,6 +1,6 @@
 "use strict";
 
-const TXW = require('lib/txw');
+const TXW = require("lib/txw");
 
 /**
  * Creates a new NPError
@@ -13,7 +13,7 @@ function NPError(message) { const me = this;
 
 	/* set */
 	me.code		= 0;
-	me.name		= 'NPError';
+	me.name		= "NPError";
 	me.message	= message;
 
 	/* set */
@@ -30,30 +30,30 @@ function NPError(message) { const me = this;
 
 		/* check */
 		if (!TXW.isDefined(lang))
-			lang = 'en'; // Fallback! => If no 'lang' set it to default language ('en')
+			lang = "en"; // Fallback! => If no 'lang' set it to default language ('en')
 
 		/* check */
 		if (!TXW.isDefined(me.messages))
-			me.messages = { en: require('res/strings').errors }; // Init & Load 'fallback' strings ('en')
+			me.messages = { en: require("res/strings").errors }; // Init & Load 'fallback' strings ('en')
 
 		/* check */
 		if (!TXW.isDefined(me.messages[lang])) {
 			try {
-				me.messages[lang] = require('res/strings_' + lang).errors; // Load strings for 'lang'
+				me.messages[lang] = require("res/strings_" + lang).errors; // Load strings for 'lang'
 			} catch(e) {
-				me.messages[lang] = me.messages['en'];	// Fallback! => Assign 'lang' strings to 'en' ones
+				me.messages[lang] = me.messages["en"];	// Fallback! => Assign 'lang' strings to 'en' ones
 			}
 		}
 
 		/* check */
-		if (!TXW.isDefined(me.messages[lang][me.message]) && (lang != 'en'))
-			lang = 'en';		// Fallback! => if no localized message for given 'lang'... try with 'en'
+		if (!TXW.isDefined(me.messages[lang][me.message]) && (lang != "en"))
+			lang = "en";		// Fallback! => if no localized message for given 'lang'... try with 'en'
 		if (!TXW.isDefined(me.messages[lang][me.message]))
 			return(me.message);	// Nothing else to try out!! (returns message as-is)
 
 		/* done */
 		return(me.messages[lang][me.message]);
-	}
+	};
 }
 
 /**
@@ -72,7 +72,7 @@ NPError.create = function(options) { let err = null;
 	if (options instanceof Error) {
 
 		/* check */
-		if (options.name === 'MongoError') {
+		if (options.name === "MongoError") {
 			let message = (options.code == 11000) ? "mongoDuplicateKeyErrorMsg" : "mongoErrorMsg";
 			err = new NPError.MongoError(message);
 		}
@@ -85,7 +85,7 @@ NPError.create = function(options) { let err = null;
 		err.stack	= options.stack;
 		err.error	= options;
 
-	} else if (typeof options == 'string') {
+	} else if (typeof options == "string") {
 		err = new NPError(options);
 	} else {
 		err = new NPError(options.message || options.errmsg || options.$err || "n/a");
@@ -97,7 +97,7 @@ NPError.create = function(options) { let err = null;
 
 	/* done */
 	return(err);
-}
+};
 
 // Extend JavaScript error
 NPError.prototype = new Error;
@@ -113,7 +113,7 @@ NPError.InvalidCredentialsError = function(message) { let err = NPError.create({
 	return(err);
 };
 NPError.AuthorizationError = function(error) { let err = NPError.create({ code: 3, message: "authorizationErrorMsg" });
-	if (typeof error == 'string')
+	if (typeof error == "string")
 		error = { message: error };
 	if (error) {
 		err.errcode	= error.code;

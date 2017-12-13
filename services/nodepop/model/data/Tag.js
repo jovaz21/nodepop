@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const mongoose = require('./_DataSource');
+const mongoose = require("./_DataSource");
 
 // Tag Schema
 const schema = mongoose.Schema({
@@ -12,5 +12,5 @@ schema.statics.list = () => {
 };
 
 // Tag Model
-const Tag = mongoose.model('Tag', schema);
+const Tag = mongoose.model("Tag", schema);
 module.exports = Tag;

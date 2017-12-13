@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const mongoose = require('./_DataSource');
-const bcrypt = require('bcrypt');
+const mongoose = require("./_DataSource");
+const bcrypt = require("bcrypt");
 
 // User Schema
 const schema = mongoose.Schema({
@@ -28,5 +28,5 @@ schema.methods.isSamePassword = function isSamePassword(password) {
 };
 
 // User Model
-const User = mongoose.model('User', schema);
+const User = mongoose.model("User", schema);
 module.exports = User;

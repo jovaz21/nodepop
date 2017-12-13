@@ -1,43 +1,42 @@
-'use strict';
+"use strict";
 
-const mongoose = require('./_DataSource');
+const mongoose = require("./_DataSource");
 
-const TXW = require('lib/txw');
+const TXW = require("lib/txw");
 
 // Ad Schema
 const schema = mongoose.Schema({
-	type:		{ type: String, enum: ['sale', 'purchase'] },
-	status:		{ type: String, enum: ['draft', 'published'], default: 'draft' },
-	statusDate:	{ type: Date, default: Date.now },
+	type:			{ type: String, enum: ["sale", "purchase"] },
+	status:			{ type: String, enum: ["draft", "published"], default: "draft" },
+	statusDate:		{ type: Date, default: Date.now },
 	article: {
-	    name:	{ type: String },
-	    description:{ type: String },
-	    photo:	{ type: String }
+		name:		{ type: String },
+		description:	{ type: String },
+		photo:		{ type: String }
 	},
 	contact: {
-	    type:	{ type: String, enum: ['individual', 'professional'] },
-	    name:	{ type: String },
-	    nickname:	{ type: String },
-	    ranking:	{ type: Number, min: 0, max: 5 },
-	    phone:	{ type: String },
-	    mobile:	{ type: String },
-	    email:	{ type: String },
-	    country:	{ type: String },
-	    street:	{ type: String },
-	    city:	{ type: String },
-	    zipCode:	{ type: String },
-	    zipCode:	{ type: String },
-	    web:	{ type: String }
+		type:		{ type: String, enum: ["individual", "professional"] },
+		name:		{ type: String },
+		nickname:	{ type: String },
+		ranking:	{ type: Number, min: 0, max: 5 },
+		phone:		{ type: String },
+		mobile:		{ type: String },
+		email:		{ type: String },
+		country:	{ type: String },
+		street:		{ type: String },
+		city:		{ type: String },
+		zipCode:	{ type: String },
+		web:		{ type: String }
 	},
-	amount:		{ type: Number },
+	amount:			{ type: Number },
 	stats: {
-	    views:	{ type: Number },
-	    contacts:	{ type: Number }
+		views:		{ type: Number },
+		contacts:	{ type: Number }
 	},
 	tags:		[String]
 });
 schema.statics.listTags = () => {
-	const ads = mongoose.connection.collection('ads');
+	const ads = mongoose.connection.collection("ads");
 	return(ads.distinct("tags"));
 };
 schema.statics.list = (filters, limit, skip, sort, select) => {
@@ -54,5 +53,5 @@ schema.statics.list = (filters, limit, skip, sort, select) => {
 };
 
 // Ad Model
-const Ad = mongoose.model('Ad', schema);
+const Ad = mongoose.model("Ad", schema);
 module.exports = Ad;

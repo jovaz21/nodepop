@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 
-const debug = require('debug')('nodepop:apiv1');
+const debug = require("debug")("nodepop:apiv1");
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const TXW = require('lib/txw');
+const TXW = require("lib/txw");
 
-const manager = require('services/nodepop/model');
-const NPError = require('services/nodepop/model/error');
+const manager = require("services/nodepop/model");
 
-const authorization = require('services/nodepop/helpers/security').authorization;
+const authorization = require("services/nodepop/helpers/security").authorization;
 
 /********** AUTHORIZATION ************/
 router.use(authorization.handler());
@@ -20,7 +19,7 @@ router.use(authorization.handler());
  * GET /ads
  * List ads
  */
-router.get('/', async function(req, res, next) {
+router.get("/", async function(req, res) {
 	const name	= req.query.name;
 	const type	= req.query.type;
 	const tag	= req.query.tag;
@@ -36,11 +35,11 @@ router.get('/', async function(req, res, next) {
 	const select	= req.query.select || "_id type article.photo article.name article.description amount contact.type contact.nickname";
 
 	/* list */
-	let filters = { status: 'published' };
-	    filters = TXW.applyIf(filters, ((name)	? { 'article.name':	new RegExp("^" + name, "i")	} : {}));
-	    filters = TXW.applyIf(filters, ((type)	? { type:		type				} : {}));
-	    filters = TXW.applyIf(filters, ((tag)	? { tags:		{ "$in": [tag] }		} : {}));
-	    filters = TXW.applyIf(filters, ((range)	? { amount:		router.getRange(range)		} : {}));
+	let filters = { status: "published" };
+	filters = TXW.applyIf(filters, ((name)	? { "article.name":	new RegExp("^" + name, "i")	} : {}));
+	filters = TXW.applyIf(filters, ((type)	? { type:		type				} : {}));
+	filters = TXW.applyIf(filters, ((tag)	? { tags:		{ "$in": [tag] }		} : {}));
+	filters = TXW.applyIf(filters, ((range)	? { amount:		router.getRange(range)		} : {}));
 	const ads = await manager.listAds(filters, limit, skip, sort, select);
 
 	/* done */
@@ -52,7 +51,7 @@ router.getRange = function(rangeStr) { const range = rangeStr.split("-");
 
 	/* check */
 	if (range.length === 1)
-		res = TXW.utils.StringUtils.parseInt(rangeStr, { '$gte': 0 });
+		res = TXW.utils.StringUtils.parseInt(rangeStr, { "$gte": 0 });
 	else {
 		let	rangeMin = TXW.utils.StringUtils.parseInt(range[0], 0);
 		let	rangeMax = TXW.utils.StringUtils.parseInt(range[1]);
@@ -67,8 +66,8 @@ router.getRange = function(rangeStr) { const range = rangeStr.split("-");
 		}
 
 		/* set */
-		res = TXW.applyIf(res, (TXW.isDefined(rangeMin) ? { '$gte': rangeMin } : {}));
-		res = TXW.applyIf(res, (TXW.isDefined(rangeMax) ? { '$lte': rangeMax } : {}));
+		res = TXW.applyIf(res, (TXW.isDefined(rangeMin) ? { "$gte": rangeMin } : {}));
+		res = TXW.applyIf(res, (TXW.isDefined(rangeMax) ? { "$lte": rangeMax } : {}));
 	}
 
 	/* done */
@@ -79,7 +78,7 @@ router.getRange = function(rangeStr) { const range = rangeStr.split("-");
  * GET /ads/tags
  * List tags (only used ones in ads)
  */
-router.get('/tags', async function(req, res, next) {
+router.get("/tags", async function(req, res) {
 	debug("<GET '/ads/tags'> handler: Entering...");
 	const tags = await manager.listUsedTags();
 	debug("<GET '/ads/tags'> handler: Done (#" + tags.length + " Tags Found)");

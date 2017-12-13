@@ -8,7 +8,7 @@
     "nodepop_db_setup": "cross-env-shell MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"node ./mongodb/setup_datasets.js\"",
     "start": "cross-env-shell NODE_ENV='production' DEBUG=nodepop:cluster,nodepop:app PORT=$APISERVER_PORT MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"node ./bin/www\"",
     "dev": "cross-env-shell DEBUG=nodepop:* PORT=$APISERVER_PORT MONGODB_URI=$MONGODB_IP:$MONGODB_PORT/$MONGODB_NAME \"nodemon --inspect ./bin/www\"",
-    "lint": "lint app.js",
+    "lint": "eslint app.js ./lib ./services",
     "gitpush": "git push origin master --follow-tags"
   },
   "dependencies": {

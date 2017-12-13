@@ -225,6 +225,8 @@ $ curl -X GET "http://localhost:8080/nodepop/apiv1/ads?range=1000-" -i -d "token
 
 ```
 nodepop/
+├─ .eslintrc.json
+|
 ├─ setenv
 ├─ setenv.cmd
 |
