@@ -1,5 +1,7 @@
 "use strict";
 
+const TXW = require('lib/txw');
+
 /**
  * Creates a new NPError
  * @class
@@ -7,15 +9,49 @@
  * @param {string} message The error message
  * @return {NPError} A NPError instance
  */
-function NPError(message) {
-  this.code = 0;
-  this.name = 'NPError';
-  this.message = message;
-  this.status = 500;
-  this.errcode = -1;
-  this.errmsg = -1;
-  this.error = null;
-  Error.captureStackTrace(this, NPError);
+function NPError(message) { const me = this;
+
+	/* set */
+	me.code		= 0;
+	me.name		= 'NPError';
+	me.message	= message;
+
+	/* set */
+	me.status = 500; // HTTP Status-Code (should be in an upper error layer)
+
+	/* set */
+	me.errcode = -1;
+	me.errmsg = -1;
+	me.error = null;
+	Error.captureStackTrace(me, NPError);
+
+	/* set */
+	this.getI18NMessage = function(lang) {
+
+		/* check */
+		if (!TXW.isDefined(lang))
+			return(me.message);
+
+		/* check */
+		if (!TXW.isDefined(me.messages))
+			me.messages = { en: require('res/strings').errors };
+		if (!TXW.isDefined(me.messages[lang])) {
+			try {
+				me.messages[lang] = require('res/strings_' + lang).errors;
+			} catch(e) {
+				me.messages[lang] = me.messages['en'];
+			}
+		}
+
+		/* check */
+		if (!TXW.isDefined(me.messages[lang][me.message]) && (lang != 'en'))
+			lang = 'en';
+		if (!TXW.isDefined(me.messages[lang][me.message]))
+			return(me.message);
+
+		/* done */
+		return(me.messages[lang][me.message]);
+	}
 }
 
 /**
@@ -35,7 +71,7 @@ NPError.create = function(options) { let err = null;
 
 		/* check */
 		if (options.name === 'MongoError') {
-			let message = (options.code == 11000) ? "Duplicate Key Error" : "Mongo Error";
+			let message = (options.code == 11000) ? "mongoDuplicateKeyErrorMsg" : "mongoErrorMsg";
 			err = new NPError.MongoError(message);
 		}
 		else
@@ -64,17 +100,17 @@ NPError.create = function(options) { let err = null;
 // Extend JavaScript error
 NPError.prototype = new Error;
 
-NPError.InvalidParametersError = function(message) { let err = NPError.create({ code: 1, message: "Invalid Parameters" });
+NPError.InvalidParametersError = function(message) { let err = NPError.create({ code: 1, message: "invalidParametersErrorMsg" });
 	err.message = message ? message : err.message;
 	err.status = 400;
 	return(err);
 };
-NPError.InvalidCredentialsError = function(message) { let err = NPError.create({ code: 2, message: "Invalid Credentials" });
+NPError.InvalidCredentialsError = function(message) { let err = NPError.create({ code: 2, message: "invalidCredentialsErrorMsg" });
 	err.message = message ? message : err.message;
 	err.status = 401;
 	return(err);
 };
-NPError.AuthorizationError = function(error) { let err = NPError.create({ code: 3, message: "Authorization Failed" });
+NPError.AuthorizationError = function(error) { let err = NPError.create({ code: 3, message: "authorizationErrorMsg" });
 	if (typeof error == 'string')
 		error = { message: error };
 	if (error) {
@@ -86,11 +122,11 @@ NPError.AuthorizationError = function(error) { let err = NPError.create({ code: 
 	err.status = 401;
 	return(err);
 };
-NPError.MongoError = function(message) { let err = NPError.create({ code: 4, message: "Mongo Error" });
+NPError.MongoError = function(message) { let err = NPError.create({ code: 4, message: "mongoErrorMsg" });
 	err.message = message ? message : err.message;
 	return(err);
 };
-NPError.UnknownError = function(message) { let err = NPError.create({ code: 5, message: "Unknown Error" });
+NPError.UnknownError = function(message) { let err = NPError.create({ code: 5, message: "unknownErrorMsg" });
 	err.message = message ? message : err.message;
 	return(err);
 };

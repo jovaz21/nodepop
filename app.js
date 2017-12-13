@@ -1,3 +1,5 @@
+const TXW = require('lib/txw');
+
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -31,8 +33,12 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+	const lang	= req.body.lang || req.query.lang || req.get('Accept-Language');
+	const message	= TXW.isDefined(err.getI18NMessage) ? err.getI18NMessage(lang) : err.message;
+
+	/* response */
 	res.status(err.status || 500);
-	res.json({ success: false, error: { code: err.code, message: err.message, internal: (req.app.get('env') === 'development' ? err.error : {}) } });
+	res.json({ success: false, error: { code: err.code, message, internal: (req.app.get('env') === 'development' ? err.error : {}) } });
 });
 
 module.exports = app;

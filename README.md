@@ -262,6 +262,10 @@ nodepop/
 │     └─ utils/
 |        └─ StringUtils.js
 |
+├─ res/
+│  ├─ strings.js
+│  └─ strings_es.js
+|
 └─ app.js
 ```
 
@@ -280,11 +284,6 @@ The photos of the articles.
 #### /services/nodepop/
 
 This is where the implementation of the RESTful API (`apiv1/` subfolder) is located, along with the "Business Model" layer (`model/` subfolder). The model package follows the "Façade Design Pattern" (a simple interface is provided) so that the details and complexities of the "Business Model" layer are perfectly hidden to the clients.
-
-## TODO
-
--	I18N Error Messages
--	Clustering
 
 ## Credits
 
