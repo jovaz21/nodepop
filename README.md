@@ -1,12 +1,8 @@
 > RESTful API using NodeJS, Express and Mongoose for 'nodepop' Mobile App
 
-## Features
+## Live Test (Amazon Web Services)
 
- - **Users Management** - Only for Registered Users (the API provides a registration service for App users)
- - **JSON Web Token** - JWT-based Authentication & Authorization mechanism
- - **Ads Querying** - Complete listing, searching and filtering interface including pagination capability
- - **I18N Errors** - Error Messages are provided in the requested language (if supported/provided, 'en' otherwise)
- - **Clustering** - The server starts up 1 worker instance per CPU to fully make use of the available hardware capacity
+The API Gateway is deployed for testing at [devops.jovaz21.tekisware.com](https://devops.jovaz21.tekisware.com/).
 
 ## Commands
 
